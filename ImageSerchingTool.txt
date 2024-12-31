@@ -1,0 +1,85 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Function to display a "mock" image (2D array simulation)
+void displayImage(const vector<vector<char>>& image) {
+    cout << "Displaying Image:" << endl;
+    for (const auto& row : image) {
+        for (const auto& pixel : row) {
+            cout << pixel << ' ';
+        }
+        cout << endl;
+    }
+}
+
+// Function to apply a "mock" grayscale filter (convert all to '#')
+void applyGrayscale(vector<vector<char>>& image) {
+    for (auto& row : image) {
+        for (auto& pixel : row) {
+            pixel = '#'; // Mock grayscale
+        }
+    }
+    cout << "Applied Grayscale Filter!" << endl;
+}
+
+// Function to crop the image (reduce size)
+void cropImage(vector<vector<char>>& image, int newRows, int newCols) {
+    if (newRows > image.size() || newCols > image[0].size()) {
+        cout << "Crop size is too large!" << endl;
+        return;
+    }
+    image.resize(newRows); // Crop rows
+    for (auto& row : image) {
+        row.resize(newCols); // Crop columns
+    }
+    cout << "Cropped Image to " << newRows << "x" << newCols << endl;
+}
+
+// Main function
+int main() {
+    // Simulating an image as a 2D array of characters
+    vector<vector<char>> image = {
+        {'R', 'G', 'B', 'R', 'G'},
+        {'G', 'B', 'R', 'G', 'B'},
+        {'B', 'R', 'G', 'B', 'R'},
+        {'R', 'G', 'B', 'R', 'G'},
+        {'G', 'B', 'R', 'G', 'B'}
+    };
+
+    int choice;
+    do {
+        cout << "\nIMAGE PROCESSING TOOL\n";
+        cout << "1. Display Image\n";
+        cout << "2. Apply Grayscale Filter\n";
+        cout << "3. Crop Image\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                displayImage(image);
+                break;
+            case 2:
+                applyGrayscale(image);
+                break;
+            case 3: {
+                int newRows, newCols;
+                cout << "Enter new rows and columns to crop: ";
+                cin >> newRows >> newCols;
+                cropImage(image, newRows, newCols);
+                break;
+            }
+            case 4:
+                cout << "Exiting Image Processing Tool. Goodbye!" << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
